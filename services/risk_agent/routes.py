@@ -3,10 +3,12 @@ from services.risk_agent.schema import RiskInput, RiskOutput
 from services.risk_agent.rules.risk_metrics import calculate_risk_metrics
 from services.shared.logger import setup_logger
 
+from services.shared.security import get_api_key
+
 router = APIRouter()
 logger = setup_logger("risk_agent")
 
-@router.post("/analyze", response_model=RiskOutput)
+@router.post("/analyze", response_model=RiskOutput, dependencies=[Depends(get_api_key)])
 async def analyze_risk(data: RiskInput):
     logger.info(f"Analyzing risk for {len(data.prices)} price points")
     try:

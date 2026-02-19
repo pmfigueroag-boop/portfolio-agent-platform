@@ -3,10 +3,12 @@ from services.value_agent.schema import ValuationInput, ValuationOutput
 from services.value_agent.rules.valuation import calculate_intrinsic_value
 from services.shared.logger import setup_logger
 
+from services.shared.security import get_api_key
+
 router = APIRouter()
 logger = setup_logger("value_agent")
 
-@router.post("/analyze", response_model=ValuationOutput)
+@router.post("/analyze", response_model=ValuationOutput, dependencies=[Depends(get_api_key)])
 async def analyze_stock(data: ValuationInput):
     logger.info(f"Analyzing ticker: {data.ticker}")
     try:

@@ -3,10 +3,12 @@ from services.consensus_agent.schema import ConsensusInput, ConsensusOutput
 from services.consensus_agent.rules.aggregation import aggregate_signals
 from services.shared.logger import setup_logger
 
+from services.shared.security import get_api_key
+
 router = APIRouter()
 logger = setup_logger("consensus_agent")
 
-@router.post("/decide", response_model=ConsensusOutput)
+@router.post("/decide", response_model=ConsensusOutput, dependencies=[Depends(get_api_key)])
 async def reach_consensus(data: ConsensusInput):
     logger.info(f"Aggregating signals for {data.ticker} from {len(data.signals)} agents")
     try:

@@ -111,10 +111,41 @@ python orchestration/pipeline.py
 ```
 *Nota: El pipeline incluye lógica de reintentos automáticos (backoff exponencial) para robustez.*
 
-### 3. Visualización (Metabase)
-Accede a `http://localhost:3000` para configurar los dashboards.
-*   **Database Host:** `db`
-*   **User/Pass:** Ver `.env.example`
+### 3. Visualización (Metabase) (Guía Completa)
+
+El proyecto incluye Metabase en `http://localhost:3000` para visualizar los datos.
+
+#### 1. Acceso Inicial
+1.  Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+2.  Haz clic en **"Let's get started"**.
+3.  Crea tu cuenta de administrador (nombre, email, contraseña).
+
+#### 2. Conectar Base de Datos
+En el paso "Add your data", selecciona **PostgreSQL** y usa estos datos (internos de Docker):
+
+| Campo | Valor |
+| :--- | :--- |
+| **Name** | `Portfolio DB` |
+| **Host** | `db` (Nombre del servicio en docker-compose) |
+| **Port** | `5432` |
+| **Database Name** | `portfolio_db` |
+| **Username** | `pmfigueroag@gmail.com` |
+| **Password** | `Admin1234$` |
+
+Haz clic en **"Next"** y luego en **"I'll handle this without usage data"** -> **"Take me to Metabase"**.
+
+#### 3. Crear Pregunta (Query)
+1.  Haz clic en **+ New** -> **Question** -> **Raw SQL**.
+2.  Selecciona `Portfolio DB`.
+3.  Prueba esta consulta para ver las señales generadas:
+    ```sql
+    SELECT * FROM agent_outputs ORDER BY generated_at DESC;
+    SELECT * FROM agent_outputs ORDER BY generated_at DESC;
+    ```
+
+#### Nota sobre `agents_count` y `NO_SIGNAL`
+-   **`agents_count`**: Indica el número de agentes que generaron una señal válida para un activo. Un valor de `0` acompañado de una decisión `NO_SIGNAL` es normal si no hay datos suficientes o todos los agentes fallaron.
+-   **`NO_SIGNAL`**: Estado explícito cuando ningún agente pudo generar una opinión. `confidence` será `0.0`.
 
 ---
 
@@ -131,7 +162,31 @@ Si ves errores de acceso a volúmenes o sockets:
 ### Reconstrucción Limpia
 Si las dependencias parecen desactualizadas o hay errores extraños de caché:
 ### Verificación de BD
-El usuario por defecto NO es `postgres`, sino `admin`. Usa este comando:
+El usuario por defecto NO es `postgres`, sino `pmfigueroag@gmail.com`. Usa este comando:
 ```bash
-docker exec -it portfolio_db psql -U admin -d portfolio_db -c "\dt"
+docker exec -it portfolio_db psql -U pmfigueroag@gmail.com -d portfolio_db -c "\dt"
 ```
+
+## 🧪 Verificación End-to-End (E2E)
+
+Para validar el flujo completo (Seeder -> Pipeline -> DB -> MinIO -> Metabase), ejecuta el script de verificación automática:
+
+### Windows (PowerShell)
+```powershell
+.\verify_full_stack.ps1
+```
+
+Este script validará:
+1.  **Seeding**: Generación de datos de prueba.
+2.  **Pipeline**: Ejecución correcta de los agentes y generación de decisiones.
+3.  **Persistencia DB**: Verificación de registros en `final_decisions`.
+4.  **Data Lake (MinIO)**: Verificación de archivos JSON en el bucket `portfolio-results`.
+5.  **Metabase**: Instrucciones para validar la visualización.
+
+### Credenciales para Metabase
+Una vez levantado el entorno, configura Metabase con:
+-   **URL**: `http://localhost:3000`
+-   **Usuario admin**: `pmfigueroag@gmail.com`
+-   **Contraseña**: `Admin1234$`
+-   **BD Host**: `db`
+-   **BD User/Pass**: `admin` / `admin`

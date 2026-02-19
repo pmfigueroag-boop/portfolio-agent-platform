@@ -1,0 +1,36 @@
+﻿2026-02-19 02:02:31,107 - pipeline - INFO - --- Calling Macro Agent ---
+2026-02-19 02:02:31,125 - pipeline - INFO - Macro Signal: NEUTRAL
+2026-02-19 02:02:31,131 - pipeline - INFO - Processing Asset: AAPL
+2026-02-19 02:02:31,228 - pipeline - INFO - >>> FINAL DECISION for AAPL: HOLD (Conf: 0.38)
+2026-02-19 02:02:31,239 - pipeline - INFO - Processing Asset: MSFT
+2026-02-19 02:02:31,285 - pipeline - INFO - >>> FINAL DECISION for MSFT: HOLD (Conf: 0.12)
+2026-02-19 02:02:31,298 - pipeline - INFO - Processing Asset: GOOGL
+2026-02-19 02:02:31,346 - pipeline - INFO - >>> FINAL DECISION for GOOGL: HOLD (Conf: 0.25)
+2026-02-19 02:02:31,361 - pipeline - INFO - Processing Asset: JPM
+2026-02-19 02:02:31,404 - pipeline - INFO - >>> FINAL DECISION for JPM: HOLD (Conf: 0.12)
+2026-02-19 02:02:31,421 - pipeline - INFO - Processing Asset: XOM
+2026-02-19 02:02:31,460 - pipeline - INFO - >>> FINAL DECISION for XOM: HOLD (Conf: 0.38)
+2026-02-19 02:02:31,471 - pipeline - INFO - Processing Asset: TSLA
+2026-02-19 02:02:31,511 - pipeline - INFO - >>> FINAL DECISION for TSLA: HOLD (Conf: 0.38)
+2026-02-19 02:02:31,521 - pipeline - INFO - Processing Asset: JNJ
+2026-02-19 02:02:31,574 - pipeline - INFO - >>> FINAL DECISION for JNJ: HOLD (Conf: 0.12)
+2026-02-19 02:02:31,591 - pipeline - INFO - Processing Asset: V
+2026-02-19 02:02:31,684 - pipeline - INFO - >>> FINAL DECISION for V: HOLD (Conf: 0.19)
+2026-02-19 02:02:31,703 - pipeline - INFO - Processing Asset: WMT
+2026-02-19 02:02:31,809 - pipeline - INFO - >>> FINAL DECISION for WMT: HOLD (Conf: 0.12)
+2026-02-19 02:02:31,832 - pipeline - INFO - Processing Asset: PG
+2026-02-19 02:02:31,920 - pipeline - INFO - >>> FINAL DECISION for PG: HOLD (Conf: 0.06)
+2026-02-19 02:02:32,235 - pipeline - INFO - Successfully uploaded results to MinIO: portfolio-results/run_20260219_020231.json
+Found 6 objects. Latest: run_20260219_020231.json
+--- Validating JSON Structure (run_20260219_020231.json) ---
+Run ID: 20260219_020231
+Result Count: 10
+First Item Sample:
+{
+  "ticker": "AAPL",
+  "decision": "HOLD",
+  "confidence": 0.38,
+  "raw_score": 0.0,
+  "agents_count": 0
+}
+SUCCESS: JSON structure is valid and clean.

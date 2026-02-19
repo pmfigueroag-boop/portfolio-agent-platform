@@ -38,9 +38,9 @@ def test_zero_ebitda_validation():
         ValuationInput(
             ticker="ZERO",
             roe=0.1,
-            fcf=100,
-            debt=100,
-            ebitda=0, # Should fail
-            current_price=10,
-            shares_outstanding=10
+            fcf=100.0,
+            debt=100.0,
+            ebitda=0.0, # Should fail
+            current_price=10.0,
+            shares_outstanding=10.0
         )

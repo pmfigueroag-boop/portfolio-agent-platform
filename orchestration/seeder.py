@@ -77,27 +77,34 @@ def seed_data():
             
         # 4. Seed Fundamentals
         for asset in created_assets:
-            if db.query(Fundamental).filter(Fundamental.asset_id == asset.id).count() > 0:
-                continue
-                
+            # Delete existing to force scenario update (Demoware)
+            db.query(Fundamental).filter(Fundamental.asset_id == asset.id).delete()
+            
+            roe = random.uniform(0.10, 0.35)
+            fcf = random.uniform(1e9, 5e9)
+            debt_ebitda = random.uniform(0.5, 4.0)
+
+            # SCENARIO INJECTION
+            if asset.ticker == "JPM": # Bull Case
+                roe = 0.25      # Strong
+                fcf = 5e10      # High Cash
+                debt_ebitda = 1.0 # Healthy
+                logger.info("Injecting JPM Bull Case")
+            elif asset.ticker == "TSLA": # Bear Case
+                roe = 0.05      # Weak
+                fcf = -1e9      # Burn
+                debt_ebitda = 5.0 # High leverage
+                logger.info("Injecting TSLA Bear Case")
+
             f = Fundamental(
                 asset_id=asset.id,
                 reporting_date=datetime.now(),
                 period="FY2025",
-                roe=random.uniform(0.10, 0.35),
-                fcf=random.uniform(1e9, 5e9),
-                debt_to_ebitda=random.uniform(0.5, 4.0),
-                intrinsic_value=random.uniform(100, 200) # Dummy
+                roe=roe,
+                fcf=fcf,
+                debt_to_ebitda=debt_ebitda,
+                intrinsic_value=random.uniform(100, 200) 
             )
-            # Add EBITDA/Debt explicitly if model supports, stored in generic/computed fields usually
-            # But here we used robust models, let's fix Fundamental model to match schema logic?
-            # Wait, our Fundamental model has roe, fcf, debt_to_ebitda. 
-            # The API input needs Debt and EBITDA separate.
-            # We should probably store those in Fundamental to be useful.
-            # Checking `services/shared/models/domain.py`: 
-            # roe, fcf, debt_to_ebitda, intrinsic_value.
-            # It lacks raw debt/ebitda. I will add them to the model now or just mock them in pipeline.
-            # For strictness, I should update the model. But purely for seeding what exists:
             db.add(f)
             db.commit()
             logger.info(f"Seeded fundamentals for {asset.ticker}")

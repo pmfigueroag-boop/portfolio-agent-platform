@@ -69,5 +69,21 @@ class AgentOutput(Base):
     agent_name = Column(String, nullable=False) # "value_agent", "quant_agent"
     signal = Column(String, nullable=False) # "buy", "sell", "hold"
     score = Column(Float) # 0.0 to 1.0
+    details = Column(String)
+    hash = Column(String)
+    previous_hash = Column(String)
+    run_id = Column(String, index=True)
     generated_at = Column(DateTime, default=datetime.utcnow)
-    details = Column(String) # JSON string or specific details separate? JSON/JSONB ideally but String for compatibility
+
+class FinalDecision(Base):
+    __tablename__ = "final_decisions"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    ticker = Column(String, nullable=False)
+    decision = Column(String, nullable=False) # BUY, SELL, HOLD
+    confidence = Column(Float)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    details = Column(String)
+    hash = Column(String)
+    previous_hash = Column(String)
+    run_id = Column(String, index=True)

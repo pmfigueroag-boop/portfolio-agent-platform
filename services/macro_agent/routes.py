@@ -3,10 +3,12 @@ from services.macro_agent.schema import MacroInput, MacroOutput
 from services.macro_agent.rules.macro_analysis import analyze_macro_regime
 from services.shared.logger import setup_logger
 
+from services.shared.security import get_api_key
+
 router = APIRouter()
 logger = setup_logger("macro_agent")
 
-@router.post("/analyze", response_model=MacroOutput)
+@router.post("/analyze", response_model=MacroOutput, dependencies=[Depends(get_api_key)])
 async def analyze_macro(data: MacroInput):
     logger.info(f"Analyzing macro data: GDP={data.gdp_growth}, Infl={data.inflation_rate}")
     try:
