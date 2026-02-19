@@ -1,0 +1,195 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: portfolio_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - portfolio_net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d portfolio_db" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  minio:
+    image: minio/minio
+    container_name: portfolio_minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-admin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - portfolio_net
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: portfolio_metabase
+    ports:
+      - "3000:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: portfolio_db
+      MB_DB_PORT: 5432
+      MB_DB_USER: ${POSTGRES_USER:-admin}
+      MB_DB_PASS: ${POSTGRES_PASSWORD:-admin}
+      MB_DB_HOST: db
+    networks:
+      - portfolio_net
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+
+  value_agent:
+    build:
+      context: .
+      dockerfile: services/value_agent/Dockerfile
+    container_name: portfolio_value_agent
+    ports:
+      - "8001:8001"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
+      POSTGRES_HOST: db
+    networks:
+      - portfolio_net
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+  quant_agent:
+    build:
+      context: .
+      dockerfile: services/quant_agent/Dockerfile
+    container_name: portfolio_quant_agent
+    ports:
+      - "8002:8002"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
+      POSTGRES_HOST: db
+    networks:
+      - portfolio_net
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M # Pandas needs more RAM
+
+  macro_agent:
+    build:
+      context: .
+      dockerfile: services/macro_agent/Dockerfile
+    container_name: portfolio_macro_agent
+    ports:
+      - "8003:8003"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
+      POSTGRES_HOST: db
+    networks:
+      - portfolio_net
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+  risk_agent:
+    build:
+      context: .
+      dockerfile: services/risk_agent/Dockerfile
+    container_name: portfolio_risk_agent
+    ports:
+      - "8004:8004"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
+      POSTGRES_HOST: db
+    networks:
+      - portfolio_net
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+  consensus_agent:
+    build:
+      context: .
+      dockerfile: services/consensus_agent/Dockerfile
+    container_name: portfolio_consensus_agent
+    ports:
+      - "8005:8005"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-admin}
+      POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
+      POSTGRES_HOST: db
+    networks:
+      - portfolio_net
+    depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+networks:
+  portfolio_net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  minio_data:

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.venv/
+env/
+dist/
+build/
+*.egg-info/
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project Specific
+*.log
+pipeline_debug.log
+seeder_debug.log
+seeder_fix.log
+pipeline_fix.log
+postgres_data/
+minio_data/
