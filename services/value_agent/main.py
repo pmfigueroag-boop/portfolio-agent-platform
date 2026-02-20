@@ -1,4 +1,8 @@
+import sys, os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from services.value_agent.routes import router
 from services.shared.config import settings
 from services.shared.middleware import add_cors_middleware
@@ -31,7 +35,7 @@ def readiness_check():
         db.execute("SELECT 1")
         return {"status": "ready"}
     except Exception:
-        return {"status": "not_ready"}, 503
+        return JSONResponse(content={"status": "not_ready"}, status_code=503)
     finally:
         db.close()
 

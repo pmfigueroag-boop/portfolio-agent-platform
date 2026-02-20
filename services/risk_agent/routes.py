@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from services.risk_agent.schema import RiskInput, RiskOutput
 from services.risk_agent.rules.risk_metrics import calculate_risk_metrics
 from services.shared.logger import setup_logger

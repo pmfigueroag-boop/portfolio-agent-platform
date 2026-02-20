@@ -140,7 +140,6 @@ Haz clic en **"Next"** y luego en **"I'll handle this without usage data"** -> *
 3.  Prueba esta consulta para ver las señales generadas:
     ```sql
     SELECT * FROM agent_outputs ORDER BY generated_at DESC;
-    SELECT * FROM agent_outputs ORDER BY generated_at DESC;
     ```
 
 #### Nota sobre `agents_count` y `NO_SIGNAL`

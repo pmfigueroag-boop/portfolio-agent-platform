@@ -1,0 +1,44 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.3, pytest-9.0.2, pluggy-1.6.0
+rootdir: C:\Users\pmfig\.gemini\antigravity\scratch\portfolio-agent-platform
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.0.0
+collected 18 items
+
+services\consensus_agent\tests\test_consensus.py ..                      [ 11%]
+services\macro_agent\tests\test_macro.py ..                              [ 22%]
+services\quant_agent\tests\test_signals.py ..                            [ 33%]
+services\risk_agent\tests\test_risk.py ..                                [ 44%]
+services\shared\tests\test_governance.py ..                              [ 55%]
+services\shared\tests\test_mode_engine.py ...                            [ 72%]
+services\value_agent\tests\test_rate_limit.py ..                         [ 83%]
+services\value_agent\tests\test_valuation.py ...                         [100%]
+
+============================== warnings summary ===============================
+services\shared\models\base.py:4
+  C:\Users\pmfig\.gemini\antigravity\scratch\portfolio-agent-platform\services\shared\models\base.py:4: MovedIn20Warning: The ``as_declarative()`` function is now available as sqlalchemy.orm.as_declarative() (deprecated since: 2.0) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    @as_declarative()
+
+services\shared\config.py:5
+  C:\Users\pmfig\.gemini\antigravity\scratch\portfolio-agent-platform\services\shared\config.py:5: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class Settings(BaseSettings):
+
+services/quant_agent/tests/test_signals.py: 250 warnings
+  C:\Users\pmfig\.gemini\antigravity\scratch\portfolio-agent-platform\services\quant_agent\rules\signals.py:9: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    df = pd.DataFrame([p.dict() for p in data.prices])
+
+services/risk_agent/tests/test_risk.py: 500 warnings
+  C:\Users\pmfig\.gemini\antigravity\scratch\portfolio-agent-platform\services\risk_agent\rules\risk_metrics.py:8: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    df = pd.DataFrame([p.dict() for p in data.prices])
+
+services/shared/tests/test_governance.py::test_agent_output_chaining
+services/shared/tests/test_governance.py::test_agent_output_chaining
+services/shared/tests/test_governance.py::test_agent_output_chaining
+services/shared/tests/test_governance.py::test_tamper_evidence
+services/shared/tests/test_governance.py::test_tamper_evidence
+services/shared/tests/test_governance.py::test_tamper_evidence
+  C:\Users\pmfig\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\sql\schema.py:3624: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    return util.wrap_callable(lambda ctx: fn(), fn)  # type: ignore
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+====================== 18 passed, 758 warnings in 2.84s =======================

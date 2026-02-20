@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from services.macro_agent.schema import MacroInput, MacroOutput
 from services.macro_agent.rules.macro_analysis import analyze_macro_regime
 from services.shared.logger import setup_logger

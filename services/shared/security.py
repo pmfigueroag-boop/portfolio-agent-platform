@@ -1,6 +1,6 @@
 from fastapi import Security, HTTPException, status
 from fastapi.security import APIKeyHeader
-import os
+from services.shared.config import settings
 
 API_KEY_NAME = "X-API-KEY"
 api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
@@ -12,8 +12,7 @@ def get_api_key(api_key_header: str = Security(api_key_header)):
             detail="Could not validate credentials"
         )
     
-    SECRET_KEY = os.getenv("API_KEY_SECRET", "dev_secret_key")
-    if api_key_header != SECRET_KEY:
+    if api_key_header != settings.API_KEY_SECRET:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid API Key"

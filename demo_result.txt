@@ -1,0 +1,56 @@
+﻿
+Portfolio Agent Platform - Analisis de Ejemplo: AAPL
+Fecha: 2026-02-19 20:12
+
+============================================================
+  VALUE AGENT - Analisis Fundamental
+============================================================
+  Valor Intrinseco:  $139.98
+  Margen Seguridad:  -15%
+  Signal:            HOLD
+  Deuda/EBITDA:      0.92x
+
+============================================================
+  QUANT AGENT - Analisis Tecnico & Momentum
+============================================================
+  Momentum 30d:  -2.77%
+  Volatilidad:   23.04%
+  Signal:        HOLD
+  MA-50:         $160.90
+  MA-200:        $143.07
+
+============================================================
+  MACRO AGENT - Regimen Macroeconomico
+============================================================
+  Regimen:   Goldilocks
+  Signal:    RISK_ON
+
+============================================================
+  RISK AGENT - Evaluacion de Riesgo
+============================================================
+  Max Drawdown:       -20.66%
+  Volatilidad Anual:  23.04%
+  Exposicion Ajust.:  33%
+  Drawdown Alert:     Si
+  Volatility Alert:   Si
+
+============================================================
+  CONSENSUS AGENT - Decision Final
+============================================================
+  Decision:   [=] HOLD
+  Confianza:  8%
+  Score:      0.08
+  Agentes:    4
+
+============================================================
+  RESUMEN - AAPL
+============================================================
+  Agente           Signal         Detalle
+  ---------------- -------------- ----------------------------
+  Value            HOLD           MoS:-15% D/E:0.9x
+  Quant            HOLD           Mom:-2.77% Vol:23.04%
+  Macro            RISK_ON        Regimen:Goldilocks
+  Risk             N/A            DD:-20.66% Exp:33%
+  ---------------- -------------- ----------------------------
+  CONSENSUS        HOLD           Confianza:8%
+

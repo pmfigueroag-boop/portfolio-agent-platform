@@ -37,7 +37,6 @@ class Settings(BaseSettings):
             "BUY": float(os.getenv("THRESHOLD_BUY", "0.20")),
             "SELL": float(os.getenv("THRESHOLD_SELL", "-0.15")),
             "STRONG_BUY": float(os.getenv("THRESHOLD_STRONG_BUY", "0.40")),
-            "STRONG_SELL": float(os.getenv("THRESHOLD_STRONG_BUY", "0.40")),
             "STRONG_SELL": float(os.getenv("THRESHOLD_STRONG_SELL", "-0.30"))
         }
 

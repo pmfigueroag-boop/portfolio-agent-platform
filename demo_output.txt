@@ -1,0 +1,31 @@
+﻿python : C:\Users\pm
+fig\AppData\Local\Pr
+ograms\Python\Python
+313\python.exe: 
+can't open file 'C:\
+\Users\\pmfig\\.gemi
+ni\\antigravity\\scr
+atch\\portfolio-agen
+t-platform\\run_demo
+.py': [Errno 2] No 
+such file or 
+directory
+En línea: 1 
+Carácter: 1
++ python 
+run_demo.py 2>&1 | 
+Out-File -Encoding 
+utf8 demo_output.txt
++ ~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: (C:\U   
+ sers\pmfig\...l    
+e or directory:    
+String) [], Rem    
+oteException
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 

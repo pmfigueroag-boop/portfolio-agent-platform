@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from services.quant_agent.schema import QuantInput, QuantOutput
 from services.quant_agent.rules.signals import calculate_quant_signals
 from services.shared.logger import setup_logger

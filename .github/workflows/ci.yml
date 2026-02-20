@@ -22,7 +22,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install ruff black mypy pytest pytest-cov
         # Install service dependencies for type checking (simplified)
-        pip install fastapi uvicorn sqlalchemy pydantic requests pandas numpy tenacity
+        pip install fastapi uvicorn sqlalchemy pydantic pydantic-settings requests pandas numpy tenacity
         
     - name: Lint with Ruff
       run: ruff check .

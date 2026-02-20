@@ -14,17 +14,17 @@ def aggregate_signals(data: ConsensusInput) -> ConsensusOutput:
         
     final_score = total_score / total_weight if total_weight > 0 else 0.0
     
-    # Decision Thresholds
+    # Decision Thresholds (strict ranges first, then broad)
     final_signal = SignalType.HOLD
     
-    if final_score > 0.4:
-        final_signal = SignalType.BUY
-    elif final_score > 0.7: 
+    if final_score > 0.7:
         final_signal = SignalType.STRONG_BUY
-    elif final_score < -0.4:
-        final_signal = SignalType.SELL
+    elif final_score > 0.4:
+        final_signal = SignalType.BUY
     elif final_score < -0.7:
         final_signal = SignalType.STRONG_SELL
+    elif final_score < -0.4:
+        final_signal = SignalType.SELL
         
     confidence = abs(final_score)
     

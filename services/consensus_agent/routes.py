@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from services.consensus_agent.schema import ConsensusInput, ConsensusOutput
 from services.consensus_agent.rules.aggregation import aggregate_signals
 from services.shared.logger import setup_logger
